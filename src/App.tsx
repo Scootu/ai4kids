@@ -1,7 +1,11 @@
-import ChatWithAi from "./components/ChatWithAi";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return <ChatWithAi />;
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 }
 
 export default App;
