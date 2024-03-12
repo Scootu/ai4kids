@@ -4,41 +4,88 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
 import { Form, useActionData } from "react-router-dom";
 
 export default function ChatWithAi() {
-  const msg = useActionData();
+  const [isClick, setIsClick] = useState<boolean>(false);
+  const [content, setContent] = useState<string>("");
+  const msg = useActionData() as string | null;
   console.log(msg);
+  useEffect(() => {
+    setIsClick(false);
+  }, [msg]);
 
   return (
     <div className="flex h-screen w-full flex-col bg-white text-black">
       <div className="flex h-20 items-center justify-center border-b border-gray-700">
         <h1 className="text-3xl font-semibold">😃 أنشأ قصة معي</h1>
       </div>
+      <div className="grid grid-cols-2 p-4 items-center justify-center">
+        <button
+          className="p-4 bg-black text-white border rounded-sm shadow"
+          onClick={() => {
+            setContent("ما هي مغامرة الدب اليوم في القصر مع الأميرة");
+          }}
+        >
+          ما هي مغامرة الدب اليوم في القصر مع الأميرة
+        </button>
+        <button
+          className="p-4 bg-black text-white border rounded-sm shadow"
+          onClick={() => {
+            setContent("قصة عن أميرة شجاعة تذهب في مغامرة لإنقاذ مملكتها");
+          }}
+        >
+          قصة عن أميرة شجاعة تذهب في مغامرة لإنقاذ مملكتها
+        </button>
+        <button
+          className="p-4 bg-black text-white border rounded-sm shadow"
+          onClick={() => {
+            setContent(
+              "قصة عن منزل شجرة سحري يمكنه نقل الأطفال إلى عوالم مختلفة."
+            );
+          }}
+        >
+          قصة عن منزل شجرة سحري يمكنه نقل الأطفال إلى عوالم مختلفة.
+        </button>
+        <button
+          className="p-4 bg-black text-white border rounded-sm shadow"
+          onClick={() => {
+            setContent("فأر فضولي، بومة حكيمة، وراكون مؤذ.");
+          }}
+        >
+          فأر فضولي، بومة حكيمة، وراكون مؤذ.
+        </button>
+      </div>
       <Form method="POST">
         <div className="flex h-20 items-center justify-between border-t border-gray-700 p-4">
           <Input
             className="flex-grow bg-gray-800 p-4 text-white placeholder-gray-400 direction "
             name="userStory"
+            value={content}
             placeholder="ما هي القصة التي تريدها"
+            onChange={() => {}}
           />
-          <button type="submit">
+          <button
+            type="submit"
+            onClick={() => {
+              setIsClick(true);
+            }}
+          >
             <PlaneIcon className="ml-4 h-6 w-6 text-gray-400 cursor-pointer" />
           </button>
         </div>
       </Form>
-      {/* <div className="flex items-center justify-center p-4">
-        <div className="loader"></div>
-      </div> */}
-      <div className="flex items-center justify-center px-4">
-        {/* <p>{msg}</p> */}
-      </div>
-
-      <div className="absolute bottom-4 right-4 flex items-center justify-center">
-        <p className="text-xs text-gray-400">
-          ChatGPT can make mistakes. Consider checking important information.
-        </p>
-      </div>
+      {isClick == true && (
+        <div className="flex items-center justify-center p-4">
+          <div className="loader"></div>
+        </div>
+      )}
+      {msg !== null && isClick == false && (
+        <div className="flex items-center justify-center px-4 direction max-w-[1080px]  mx-auto">
+          {<p>{msg}</p>}
+        </div>
+      )}
     </div>
   );
 }

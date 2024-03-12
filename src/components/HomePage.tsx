@@ -4,55 +4,32 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { NavBar } from "./NavBar";
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="py-4 md:py-6">
         <div className="container flex items-center justify-between px-4 md:px-6">
-          <a className="flex items-center space-x-2" href="#">
+          <Link to={""} className="flex items-center space-x-2" relative="path">
             <span className="sr-only">Home</span>
             <SquareIcon className="w-6 h-6" />
             <span className="font-semibold">KidsAI</span>
-          </a>
-          <nav className="hidden space-x-4 text-sm font-medium lg:flex">
-            <a
-              className="text-gray-900 hover:underline dark:text-gray-100 dark:hover:underline"
-              href="#"
-            >
-              Story
-            </a>
-            <a
-              className="text-gray-900 hover:underline dark:text-gray-100 dark:hover:underline"
-              href="#"
-            >
-              Paint
-            </a>
-            <a
-              className="text-gray-900 hover:underline dark:text-gray-100 dark:hover:underline"
-              href="#"
-            >
-              About
-            </a>
-            <a
-              className="text-gray-900 hover:underline dark:text-gray-100 dark:hover:underline"
-              href="#"
-            >
-              Contact
-            </a>
-          </nav>
+          </Link>
+          <NavBar />
           <div className="flex items-center space-x-4">
-            <a
+            <Link
+              to={"signin"}
               className="inline-flex h-8 items-center justify-center rounded-lg border border-gray-200 border-gray-200 hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:border-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-50"
-              href="#"
             >
               Sign In
-            </a>
-            <a
+            </Link>
+            <Link
+              to={"signup"}
               className="inline-flex h-8 items-center justify-center rounded-lg border border-gray-200 border-gray-200 bg-gray-900 text-gray-50 hover:bg-gray-900/90 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-50 dark:hover:bg-gray-50/90 dark:hover:text-gray-50"
-              href="#"
             >
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </header>

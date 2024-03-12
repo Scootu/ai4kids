@@ -5,7 +5,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ChatWithAi from "./components/ChatWithAi.tsx";
 import HomePage from "./components/HomePage.tsx";
-import Anthropic from "@anthropic-ai/sdk";
+
 const route = createBrowserRouter([
   {
     path: "/ai4kids",
@@ -21,33 +21,26 @@ const route = createBrowserRouter([
         action: async ({ request }) => {
           const formData = await request.formData();
           const userStory = formData.get("userStory");
+          // Assuming this code is in your React component
+          console.log(userStory);
 
-          const anthropic = new Anthropic({
-            apiKey:
-              "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", // defaults to process.env["ANTHROPIC_API_KEY"]
-          });
-
-          const msg = await anthropic.messages
-            .create({
-              model: "claude-3-opus-20240229",
-              max_tokens: 1024,
-              messages: [
-                {
-                  role: "user",
-                  content: `Generate a storie for kids with the following content :${userStory}`,
-                },
-              ],
-            })
-            .catch(async (err) => {
-              if (err instanceof Anthropic.APIError) {
-                console.log(err.status); // 400
-                console.log(err.name); // BadRequestError
-                console.log(err.headers); // {server: 'nginx', ...}
-              } else {
-                throw err;
-              }
-            });
-          return msg || null;
+          const response = await fetch(
+            "http://localhost:3000/api/v1/messages",
+            {
+              method: "POST", // or 'GET', 'PUT', etc.
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ userStory: userStory }), // Send userStory in the request body
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            return data.content[0].text;
+          } else {
+            console.error("Failed to fetch data:", response.statusText);
+            return null; // Or handle error as needed
+          }
         },
       },
     ],
