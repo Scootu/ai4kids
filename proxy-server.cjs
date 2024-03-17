@@ -27,16 +27,16 @@ app.use("/api", async (req, res) => {
 
   try {
     // Forward the request to the external API
-    // const client = new Anthropic({
-    //   apiKey:
-    //     "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",
-    //   fetch: async (url, init) => {
-    //     console.log("About to make a request", url, init);
-    //     const response = await fetch(url, init);
-    //     console.log("Got response", response);
-    //     return response;
-    //   },
-    // });
+    const client = new Anthropic({
+      apiKey:
+        "",
+      fetch: async (url, init) => {
+        console.log("About to make a request", url, init);
+        const response = await fetch(url, init);
+        console.log("Got response", response);
+        return response;
+      },
+    });
     const response = await client.messages.create({
       max_tokens: 1024,
       messages: [
